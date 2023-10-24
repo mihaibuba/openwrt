@@ -25,9 +25,9 @@ Signed-off-by: Marty Jones <mj8263788@gmail.com>
 
 --- a/arch/arm/dts/Makefile
 +++ b/arch/arm/dts/Makefile
-@@ -192,6 +192,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3588) += \
- 	rk3588-edgeble-neu6b-io.dtb \
- 	rk3588-evb1-v10.dtb \
+@@ -196,6 +196,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3588) += \
+ 	rk3588s-orangepi-5.dtb \
+ 	rk3588-orangepi-5-plus.dtb \
  	rk3588s-rock-5a.dtb \
 +	rk3588-nanopi-r6c.dtb \
  	rk3588-rock-5b.dtb
@@ -264,7 +264,7 @@ Signed-off-by: Marty Jones <mj8263788@gmail.com>
 +};
 --- a/arch/arm/mach-rockchip/rk3588/Kconfig
 +++ b/arch/arm/mach-rockchip/rk3588/Kconfig
-@@ -55,6 +55,12 @@ config TARGET_ROCK5A_RK3588
+@@ -100,6 +100,12 @@ config TARGET_ROCK5A_RK3588
  	  USB PD over USB Type-C
  	  Size: 85mm x 56mm (Raspberry Pi 4 form factor)
  
@@ -277,9 +277,9 @@ Signed-off-by: Marty Jones <mj8263788@gmail.com>
  config TARGET_ROCK5B_RK3588
  	bool "Radxa ROCK5B RK3588 board"
  	select BOARD_LATE_INIT
-@@ -94,6 +100,7 @@ config SYS_MALLOC_F_LEN
- 
+@@ -140,6 +146,7 @@ config SYS_MALLOC_F_LEN
  source board/edgeble/neural-compute-module-6/Kconfig
+ source board/friendlyelec/nanopc-t6-rk3588/Kconfig
  source board/rockchip/evb_rk3588/Kconfig
 +source board/friendlyelec/nanopi-r6c-rk3588/Kconfig
  source board/radxa/rock5a-rk3588s/Kconfig
