@@ -1,0 +1,28 @@
+From 265ffcf908ac2e842eff8106064b41cad070c242 Mon Sep 17 00:00:00 2001
+From: Marty Jones <mj8263788@gmail.com>
+Date: Sat, 4 Nov 2023 19:42:32 -0400
+Subject: [PATCH] devices: add Cypress CYW43455 variant found on the Raspberry
+ Pi 5
+
+This adds a Cypress CYW43455 variant found on the Raspberry Pi 5 .
+
+Signed-off-by: Marty Jones <mj8263788@gmail.com>
+---
+ devices.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/devices.txt b/devices.txt
+index 3f28446..e1b6215 100644
+--- a/devices.txt
++++ b/devices.txt
+@@ -188,6 +188,7 @@
+ 0x14c3 0x7915 0x14c3 0x7915    0      0  "MediaTek" "MT7915E"
+ 0x14e4 0xaa52 0x14e4 0xaa52    0      0  "Broadcom" "BCM43602"
+ 0x02d0 0xa9a6 0x0000 0x0000    0      0  "Cypress"  "CYW43455"
++0x02d0 0x4345 0x0000 0x0000    0      0  "Cypress"  "CYW43455"
+ 0x1ae9 0x0310 0x1ae9 0x0000    0      0  "Wilocity" "Wil6210"
+ 
+ # USB devices
+-- 
+2.39.2
+
