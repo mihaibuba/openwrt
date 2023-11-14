@@ -1,0 +1,96 @@
+name: Build rockchip-6.1
+on: [push]
+
+jobs:
+    build:
+        name: Prepare and build rockchip-6.1 images
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Setup Ubuntu
+              run: |
+                sudo apt update
+                sudo apt install -y python3 python3-pip python3-ply python3-distutils python3-pyelftools libpython3-dev swig
+            - name: Maximize build space
+              uses: AdityaGarg8/remove-unwanted-software@v1
+              with:
+                remove-android: 'true'
+                remove-dotnet: 'true'
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Build
+              run: |
+                ./scripts/feeds update -a
+                ./scripts/feeds install -a
+                cd feeds/luci
+
+                wget https://gist.githubusercontent.com/mj22226/f6db007367a22a31f9cb1c109a032b45/raw/be368c4f1605f652a001d81548c3a3e14adf6cb7/luci-app-diskman.patch
+
+                git apply luci-app-diskman.patch
+                cd -
+                cd  feeds/packages
+                wget https://gist.githubusercontent.com/mj22226/351f11e66f08f06e37a985719a31ddb4/raw/b35ba7a3aac1949bd6bbeaad065a0a93dc3c34f0/01-cpu.patch
+
+                git apply  01-cpu.patch
+
+                cd -
+                sed -i "70s/'0'/'1'/" feeds/luci/applications/luci-app-statistics/root/etc/config/luci_statistics
+                sed -i "83s/'0'/'1'/" feeds/luci/applications/luci-app-statistics/root/etc/config/luci_statistics
+                sed -i "194s/'0'/'1'/" feeds/luci/applications/luci-app-statistics/root/etc/config/luci_statistics
+                sed -i "211s/'0'/'1'/" feeds/luci/applications/luci-app-statistics/root/etc/config/luci_statistics
+                sed -i "13s/'1'/'0'/" feeds/packages/utils/dockerd/files/etc/config/dockerd
+
+                ./scripts/feeds update -a
+                ./scripts/feeds install -a -f
+                cp .github/workflows/config.buildinfo .config
+                make defconfig
+                wget https://gist.githubusercontent.com/mj22226/23edc25efeb65ef69d8eb6598f4f8179/raw/29c862e3e2558852523f4e8edd5f3d0cc145067e/01-key.patch
+                git apply 01-key.patch
+                make download -j32
+                rm 01-key.patch
+                make tools/install -j$(nproc)
+                make toolchain/install -j$(nproc)
+                make -j$(nproc) 'IGNORE_ERRORS=n m'
+                mkdir squashfs
+                rm -rf build_dir
+                cp bin/targets/rockchip/armv8/*.gz squashfs/
+                make clean
+                rm -rf tmp
+                sed -i "73s/# CONFIG_ARM_ROCKCHIP_CPUFREQ is not set/CONFIG_ARM_ROCKCHIP_CPUFREQ=y/" target/linux/rockchip/armv8/config-6.1
+                cp .github/workflows/config.buildinfo1 .config
+                make defconfig
+                mkdir bin/targets/rockchip/armv8
+                cp squashfs/*.gz bin/targets/rockchip/armv8/
+                make -j$(nproc) 'IGNORE_ERRORS=n m'
+                rm -rf build_dir
+                tar -cvf rockchip-images.tar bin/targets/rockchip/armv8
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: rockchip-images
+                path: rockchip-images.tar
+
+    release:
+          name: Make a release
+          runs-on: ubuntu-latest
+          needs: build
+
+          steps:
+            - name: Download the image artifacts
+              uses: actions/download-artifact@v3
+              with:
+                name: rockchip-images
+
+            - name: Extract the image artifacts
+              run: tar xf rockchip-images.tar
+
+            - name: Create a release
+              uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                prerelease: false
+                title: "Rockchip v6.1 Images"
+                automatic_release_tag: "linux-6.1"
+                files: bin/targets/rockchip/armv8/*
