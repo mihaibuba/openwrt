@@ -172,4 +172,22 @@ ifeq ($(SUBTARGET),bcm2711)
   TARGET_DEVICES += rpi-4
 endif
 
+define Device/rpi-5
+  DEVICE_MODEL := 5
+  DEVICE_VARIANT := (64bit)
+  KERNEL_IMG := kernel_2712.img
+  DEVICE_DTS := broadcom/bcm2712-rpi-5-b
+  SUPPORTED_DEVICES := raspberrypi,5-model-b
+  DEVICE_PACKAGES := \
+	brcmfmac-firmware-43455-rpi-5-sdio \
+	kmod-hwmon-pwmfan kmod-usb3 \
+	kmod-brcmfmac wpad-basic-mbedtls \
+	kmod-usb-dwc3 kmod-thermal
+  IMAGE/sysupgrade.img.gz := boot-common | boot-2711 | sdcard-img | gzip | append-metadata
+  IMAGE/factory.img.gz := boot-common | boot-2711 | sdcard-img | gzip
+endef
+ifeq ($(SUBTARGET),bcm2712)
+  TARGET_DEVICES += rpi-5
+endif
+
 $(eval $(call BuildImage))
