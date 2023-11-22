@@ -21,7 +21,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  #include "rk3588.dtsi"
  
  / {
-@@ -167,6 +168,18 @@
+@@ -224,6 +225,18 @@
  		regulator-max-microvolt = <5000000>;
  		vin-supply = <&vcc5v0_usbdcin>;
  	};
@@ -40,7 +40,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  };
  
  &combphy0_ps {
-@@ -227,6 +240,56 @@
+@@ -284,6 +297,56 @@
  &i2c2 {
  	status = "okay";
  
@@ -97,7 +97,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  	hym8563: rtc@51 {
  		compatible = "haoyu,hym8563";
  		reg = <0x51>;
-@@ -313,6 +376,16 @@
+@@ -410,6 +473,16 @@
  			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
  	};
@@ -114,7 +114,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  };
  
  &pwm2 {
-@@ -943,6 +1016,22 @@
+@@ -1040,6 +1113,22 @@
  	status = "okay";
  };
  
@@ -137,7 +137,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  &u2phy2 {
  	status = "okay";
  };
-@@ -981,3 +1070,58 @@
+@@ -1078,3 +1167,58 @@
  &usb_host1_ohci {
  	status = "okay";
  };
