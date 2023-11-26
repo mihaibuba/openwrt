@@ -1,0 +1,25 @@
+From fec3330eb2bdbdc4bec104ce2cad3cc0bf52f3ea Mon Sep 17 00:00:00 2001
+From: Marty Jones <mj8263788@gmail.com>
+Date: Mon, 30 Oct 2023 11:23:32 -0400
+Subject: [PATCH] Revert "crypto: ahash - remove crypto_ahash_alignmask"
+
+This reverts commit 0f8660c82b79af595b056f6b9f4f227edeb88574.
+---
+ include/crypto/hash.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+--- a/include/crypto/hash.h
++++ b/include/crypto/hash.h
+@@ -333,6 +333,12 @@ static inline const char *crypto_ahash_d
+ 	return crypto_tfm_alg_driver_name(crypto_ahash_tfm(tfm));
+ }
+ 
++static inline unsigned int crypto_ahash_alignmask(
++	struct crypto_ahash *tfm)
++{
++	return crypto_tfm_alg_alignmask(crypto_ahash_tfm(tfm));
++}
++
+ /**
+  * crypto_ahash_blocksize() - obtain block size for cipher
+  * @tfm: cipher handle
