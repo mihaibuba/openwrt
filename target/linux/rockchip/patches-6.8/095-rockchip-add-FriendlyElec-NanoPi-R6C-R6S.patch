@@ -9,7 +9,7 @@ Subject: [PATCH 95/95] rockchip: add FriendlyElec NanoPi R6C/R6S
 
 --- a/arch/arm64/boot/dts/rockchip/Makefile
 +++ b/arch/arm64/boot/dts/rockchip/Makefile
-@@ -112,3 +112,5 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-i
+@@ -114,3 +114,5 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-i
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-khadas-edge2.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-rock-5a.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-orangepi-5.dtb

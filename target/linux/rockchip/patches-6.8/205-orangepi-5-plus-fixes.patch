@@ -1,6 +1,6 @@
 --- a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
-@@ -1,24 +1,20 @@
+@@ -1,214 +1,215 @@
  // SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 -/*
 - * Copyright (c) 2023 Ondřej Jirman <megi@xff.cz>
@@ -27,10 +27,10 @@
 -		mmc1 = &sdmmc;
 +		mmc0 = &sdmmc;
 +		mmc1 = &sdhci;
- 		serial2 = &uart2;
++		serial2 = &uart2;
  	};
  
-@@ -26,190 +22,194 @@
+ 	chosen {
  		stdout-path = "serial2:1500000n8";
  	};
  
@@ -357,7 +357,7 @@
  	};
  };
  
-@@ -227,34 +227,42 @@
+@@ -226,34 +227,42 @@
  
  &cpu_b0 {
  	cpu-supply = <&vdd_cpu_big0_s0>;
@@ -400,7 +400,7 @@
  };
  
  &i2c0 {
-@@ -262,7 +270,7 @@
+@@ -261,7 +270,7 @@
  	pinctrl-0 = <&i2c0m2_xfer>;
  	status = "okay";
  
@@ -409,7 +409,7 @@
  		compatible = "rockchip,rk8602";
  		reg = <0x42>;
  		fcs,suspend-voltage-selector = <1>;
-@@ -279,7 +287,7 @@
+@@ -278,7 +287,7 @@
  		};
  	};
  
@@ -418,7 +418,7 @@
  		compatible = "rockchip,rk8603", "rockchip,rk8602";
  		reg = <0x43>;
  		fcs,suspend-voltage-selector = <1>;
-@@ -297,137 +305,155 @@
+@@ -296,137 +305,155 @@
  	};
  };
  
@@ -648,7 +648,7 @@
  	status = "okay";
  };
  
-@@ -443,50 +469,45 @@
+@@ -442,50 +469,45 @@
  };
  
  &sdmmc {
@@ -714,7 +714,7 @@
  
  		vcc1-supply = <&vcc5v0_sys>;
  		vcc2-supply = <&vcc5v0_sys>;
-@@ -500,8 +521,8 @@
+@@ -499,8 +521,8 @@
  		vcc10-supply = <&vcc5v0_sys>;
  		vcc11-supply = <&vcc_2v0_pldo_s3>;
  		vcc12-supply = <&vcc5v0_sys>;
@@ -725,7 +725,7 @@
  		vcca-supply = <&vcc5v0_sys>;
  
  		gpio-controller;
-@@ -514,7 +535,7 @@
+@@ -513,7 +535,7 @@
  
  		rk806_dvs2_null: dvs2-null-pins {
  			pins = "gpio_pwrctrl2";
@@ -734,7 +734,7 @@
  		};
  
  		rk806_dvs3_null: dvs3-null-pins {
-@@ -523,26 +544,26 @@
+@@ -522,26 +544,26 @@
  		};
  
  		regulators {
@@ -766,7 +766,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -550,12 +571,12 @@
+@@ -549,12 +571,12 @@
  			};
  
  			vdd_log_s0: dcdc-reg3 {
@@ -781,7 +781,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -563,13 +584,14 @@
+@@ -562,13 +584,14 @@
  				};
  			};
  
@@ -799,7 +799,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -577,12 +599,12 @@
+@@ -576,12 +599,12 @@
  			};
  
  			vdd_ddr_s0: dcdc-reg5 {
@@ -813,7 +813,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -591,9 +613,9 @@
+@@ -590,9 +613,9 @@
  			};
  
  			vdd2_ddr_s3: dcdc-reg6 {
@@ -824,7 +824,7 @@
  
  				regulator-state-mem {
  					regulator-on-in-suspend;
-@@ -601,12 +623,12 @@
+@@ -600,12 +623,12 @@
  			};
  
  			vcc_2v0_pldo_s3: dcdc-reg7 {
@@ -838,7 +838,7 @@
  
  				regulator-state-mem {
  					regulator-on-in-suspend;
-@@ -615,11 +637,11 @@
+@@ -614,11 +637,11 @@
  			};
  
  			vcc_3v3_s3: dcdc-reg8 {
@@ -851,7 +851,7 @@
  
  				regulator-state-mem {
  					regulator-on-in-suspend;
-@@ -628,9 +650,9 @@
+@@ -627,9 +650,9 @@
  			};
  
  			vddq_ddr_s0: dcdc-reg9 {
@@ -862,7 +862,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -638,11 +660,11 @@
+@@ -637,11 +660,11 @@
  			};
  
  			vcc_1v8_s3: dcdc-reg10 {
@@ -875,7 +875,7 @@
  
  				regulator-state-mem {
  					regulator-on-in-suspend;
-@@ -651,25 +673,23 @@
+@@ -650,25 +673,23 @@
  			};
  
  			avcc_1v8_s0: pldo-reg1 {
@@ -903,7 +903,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -678,11 +698,11 @@
+@@ -677,11 +698,11 @@
  			};
  
  			avdd_1v2_s0: pldo-reg3 {
@@ -916,7 +916,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -690,12 +710,12 @@
+@@ -689,12 +710,12 @@
  			};
  
  			vcc_3v3_s0: pldo-reg4 {
@@ -930,7 +930,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -703,12 +723,12 @@
+@@ -702,12 +723,12 @@
  			};
  
  			vccio_sd_s0: pldo-reg5 {
@@ -944,7 +944,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -716,11 +736,11 @@
+@@ -715,11 +736,11 @@
  			};
  
  			pldo6_s3: pldo-reg6 {
@@ -957,7 +957,7 @@
  
  				regulator-state-mem {
  					regulator-on-in-suspend;
-@@ -729,11 +749,11 @@
+@@ -728,11 +749,11 @@
  			};
  
  			vdd_0v75_s3: nldo-reg1 {
@@ -970,7 +970,7 @@
  
  				regulator-state-mem {
  					regulator-on-in-suspend;
-@@ -742,11 +762,11 @@
+@@ -741,11 +762,11 @@
  			};
  
  			vdd_ddr_pll_s0: nldo-reg2 {
@@ -983,7 +983,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -755,17 +775,11 @@
+@@ -754,17 +775,11 @@
  			};
  
  			avdd_0v75_s0: nldo-reg3 {
@@ -1004,7 +1004,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -773,11 +787,11 @@
+@@ -772,11 +787,11 @@
  			};
  
  			vdd_0v85_s0: nldo-reg4 {
@@ -1017,7 +1017,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -785,11 +799,11 @@
+@@ -784,11 +799,11 @@
  			};
  
  			vdd_0v75_s0: nldo-reg5 {
@@ -1030,7 +1030,7 @@
  
  				regulator-state-mem {
  					regulator-off-in-suspend;
-@@ -799,35 +813,133 @@
+@@ -798,35 +813,133 @@
  	};
  };
  
@@ -1172,7 +1172,7 @@
  	status = "okay";
  };
  
-@@ -839,6 +951,21 @@
+@@ -838,6 +951,21 @@
  	status = "okay";
  };
  
@@ -1194,7 +1194,7 @@
  &usb_host1_ehci {
  	status = "okay";
  };
-@@ -846,3 +973,11 @@
+@@ -845,3 +973,11 @@
  &usb_host1_ohci {
  	status = "okay";
  };
