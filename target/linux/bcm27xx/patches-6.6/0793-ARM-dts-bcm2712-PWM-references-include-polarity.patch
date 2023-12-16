@@ -1,0 +1,23 @@
+From 2fd165a7bc1d3aa44c6a5e5ed8e2a93241b6524d Mon Sep 17 00:00:00 2001
+From: Phil Elwell <phil@raspberrypi.com>
+Date: Fri, 8 Dec 2023 15:29:38 +0000
+Subject: [PATCH] ARM: dts: bcm2712: PWM references include polarity
+
+Increase #pwm-cells to 3 to allow for the extra polarity word.
+
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+---
+ arch/arm/boot/dts/broadcom/bcm2712.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/arch/arm/boot/dts/broadcom/bcm2712.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm2712.dtsi
+@@ -628,7 +628,7 @@
+ 		pwm_aon: pwm@7d517a80 {
+ 			compatible = "brcm,bcm7038-pwm";
+ 			reg = <0x7d517a80 0x28>;
+-			#pwm-cells = <2>;
++			#pwm-cells = <3>;
+ 			clocks = <&clk_27MHz>;
+ 		};
+ 

@@ -1,0 +1,75 @@
+From 3ce80bb2038c2592a1b3f8989ea767c480d89132 Mon Sep 17 00:00:00 2001
+From: Kenny <aSmig+github@romhat.net>
+Date: Wed, 22 Nov 2023 16:22:37 -0800
+Subject: [PATCH] configs: Add the adt7410 module
+
+Signed-off-by: Kenny <aSmig+github@romhat.net>
+---
+ arch/arm/configs/bcm2709_defconfig   | 1 +
+ arch/arm/configs/bcm2711_defconfig   | 1 +
+ arch/arm/configs/bcmrpi_defconfig    | 1 +
+ arch/arm64/configs/bcm2711_defconfig | 1 +
+ arch/arm64/configs/bcm2712_defconfig | 1 +
+ arch/arm64/configs/bcmrpi3_defconfig | 1 +
+ 6 files changed, 6 insertions(+)
+
+--- a/arch/arm/configs/bcm2709_defconfig
++++ b/arch/arm/configs/bcm2709_defconfig
+@@ -720,6 +720,7 @@ CONFIG_BATTERY_DS2760=m
+ CONFIG_BATTERY_MAX17040=m
+ CONFIG_CHARGER_GPIO=m
+ CONFIG_BATTERY_GAUGE_LTC2941=m
++CONFIG_SENSORS_ADT7410=m
+ CONFIG_SENSORS_AHT10=m
+ CONFIG_SENSORS_DRIVETEMP=m
+ CONFIG_SENSORS_DS1621=m
+--- a/arch/arm/configs/bcm2711_defconfig
++++ b/arch/arm/configs/bcm2711_defconfig
+@@ -734,6 +734,7 @@ CONFIG_BATTERY_DS2760=m
+ CONFIG_BATTERY_MAX17040=m
+ CONFIG_CHARGER_GPIO=m
+ CONFIG_BATTERY_GAUGE_LTC2941=m
++CONFIG_SENSORS_ADT7410=m
+ CONFIG_SENSORS_AHT10=m
+ CONFIG_SENSORS_DRIVETEMP=m
+ CONFIG_SENSORS_DS1621=m
+--- a/arch/arm/configs/bcmrpi_defconfig
++++ b/arch/arm/configs/bcmrpi_defconfig
+@@ -714,6 +714,7 @@ CONFIG_BATTERY_DS2760=m
+ CONFIG_BATTERY_MAX17040=m
+ CONFIG_CHARGER_GPIO=m
+ CONFIG_BATTERY_GAUGE_LTC2941=m
++CONFIG_SENSORS_ADT7410=m
+ CONFIG_SENSORS_AHT10=m
+ CONFIG_SENSORS_DRIVETEMP=m
+ CONFIG_SENSORS_DS1621=m
+--- a/arch/arm64/configs/bcm2711_defconfig
++++ b/arch/arm64/configs/bcm2711_defconfig
+@@ -757,6 +757,7 @@ CONFIG_BATTERY_DS2760=m
+ CONFIG_BATTERY_MAX17040=m
+ CONFIG_CHARGER_GPIO=m
+ CONFIG_BATTERY_GAUGE_LTC2941=m
++CONFIG_SENSORS_ADT7410=m
+ CONFIG_SENSORS_AHT10=m
+ CONFIG_SENSORS_DRIVETEMP=m
+ CONFIG_SENSORS_DS1621=m
+--- a/arch/arm64/configs/bcm2712_defconfig
++++ b/arch/arm64/configs/bcm2712_defconfig
+@@ -760,6 +760,7 @@ CONFIG_BATTERY_DS2760=m
+ CONFIG_BATTERY_MAX17040=m
+ CONFIG_CHARGER_GPIO=m
+ CONFIG_BATTERY_GAUGE_LTC2941=m
++CONFIG_SENSORS_ADT7410=m
+ CONFIG_SENSORS_AHT10=m
+ CONFIG_SENSORS_DRIVETEMP=m
+ CONFIG_SENSORS_DS1621=m
+--- a/arch/arm64/configs/bcmrpi3_defconfig
++++ b/arch/arm64/configs/bcmrpi3_defconfig
+@@ -716,6 +716,7 @@ CONFIG_BATTERY_DS2760=m
+ CONFIG_BATTERY_MAX17040=m
+ CONFIG_CHARGER_GPIO=m
+ CONFIG_BATTERY_GAUGE_LTC2941=m
++CONFIG_SENSORS_ADT7410=m
+ CONFIG_SENSORS_AHT10=m
+ CONFIG_SENSORS_DRIVETEMP=m
+ CONFIG_SENSORS_DS1621=m

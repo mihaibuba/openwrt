@@ -285,7 +285,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
  static inline int mmc_blk_part_switch(struct mmc_card *card,
  				      unsigned int part_type);
  static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
-@@ -2960,6 +2967,8 @@ static int mmc_blk_probe(struct mmc_card
+@@ -2964,6 +2971,8 @@ static int mmc_blk_probe(struct mmc_card
  {
  	struct mmc_blk_data *md;
  	int ret = 0;
@@ -294,7 +294,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
  
  	/*
  	 * Check that the card supports the command class(es) we need.
-@@ -2967,7 +2976,16 @@ static int mmc_blk_probe(struct mmc_card
+@@ -2971,7 +2980,16 @@ static int mmc_blk_probe(struct mmc_card
  	if (!(card->csd.cmdclass & CCC_BLOCK_READ))
  		return -ENODEV;
  
@@ -312,7 +312,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
  
  	card->complete_wq = alloc_workqueue("mmc_complete",
  					WQ_MEM_RECLAIM | WQ_HIGHPRI, 0);
-@@ -2982,6 +3000,17 @@ static int mmc_blk_probe(struct mmc_card
+@@ -2986,6 +3004,17 @@ static int mmc_blk_probe(struct mmc_card
  		goto out_free;
  	}
  
@@ -332,7 +332,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
  		goto out;
 --- a/drivers/mmc/core/core.c
 +++ b/drivers/mmc/core/core.c
-@@ -1813,7 +1813,8 @@ EXPORT_SYMBOL(mmc_erase);
+@@ -1818,7 +1818,8 @@ EXPORT_SYMBOL(mmc_erase);
  
  int mmc_can_erase(struct mmc_card *card)
  {
@@ -344,7 +344,7 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
  }
 --- a/drivers/mmc/core/quirks.h
 +++ b/drivers/mmc/core/quirks.h
-@@ -129,6 +129,14 @@ static const struct mmc_fixup __maybe_un
+@@ -130,6 +130,14 @@ static const struct mmc_fixup __maybe_un
  	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_SD, 0x5344, add_quirk_sd,
  		  MMC_QUIRK_BROKEN_SD_DISCARD),
  
@@ -2013,12 +2013,11 @@ Signed-off-by: Phil Elwell <phil@raspberrypi.com>
  		sdhci_dumpregs(host);
 --- a/include/linux/mmc/card.h
 +++ b/include/linux/mmc/card.h
-@@ -296,6 +296,8 @@ struct mmc_card {
+@@ -296,6 +296,7 @@ struct mmc_card {
  #define MMC_QUIRK_BROKEN_SD_DISCARD	(1<<14)	/* Disable broken SD discard support */
  #define MMC_QUIRK_BROKEN_SD_CACHE	(1<<15)	/* Disable broken SD cache support */
- 
+ #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
 +#define MMC_QUIRK_ERASE_BROKEN	(1<<31)		/* Skip erase */
-+
- 	bool			reenable_cmdq;	/* Re-enable Command Queue */
  
- 	unsigned int		erase_size;	/* erase size in sectors */
+ 	bool			written_flag;	/* Indicates eMMC has been written since power on */
+ 	bool			reenable_cmdq;	/* Re-enable Command Queue */

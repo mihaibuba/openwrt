@@ -1,0 +1,81 @@
+From 9f4f584c1b75243d0b304a9dca84ff7dcd209774 Mon Sep 17 00:00:00 2001
+From: Ryan McClelland <rymcclel@gmail.com>
+Date: Mon, 27 Nov 2023 16:55:08 -0800
+Subject: [PATCH] arch: arm: configs: add HID_NINTENDO to rpi defconfigs
+
+Signed-off-by: Ryan McClelland <rymcclel@gmail.com>
+---
+ arch/arm/configs/bcm2709_defconfig   | 2 ++
+ arch/arm/configs/bcm2711_defconfig   | 2 ++
+ arch/arm/configs/bcmrpi_defconfig    | 2 ++
+ arch/arm64/configs/bcm2711_defconfig | 2 ++
+ arch/arm64/configs/bcm2712_defconfig | 2 ++
+ arch/arm64/configs/bcmrpi3_defconfig | 2 ++
+ 6 files changed, 12 insertions(+)
+
+--- a/arch/arm/configs/bcm2709_defconfig
++++ b/arch/arm/configs/bcm2709_defconfig
+@@ -1091,6 +1091,8 @@ CONFIG_HID_MAGICMOUSE=m
+ CONFIG_HID_MICROSOFT=m
+ CONFIG_HID_MONTEREY=m
+ CONFIG_HID_MULTITOUCH=m
++CONFIG_HID_NINTENDO=m
++CONFIG_NINTENDO_FF=y
+ CONFIG_HID_NTRIG=m
+ CONFIG_HID_ORTEK=m
+ CONFIG_HID_PANTHERLORD=m
+--- a/arch/arm/configs/bcm2711_defconfig
++++ b/arch/arm/configs/bcm2711_defconfig
+@@ -1108,6 +1108,8 @@ CONFIG_HID_MAGICMOUSE=m
+ CONFIG_HID_MICROSOFT=m
+ CONFIG_HID_MONTEREY=m
+ CONFIG_HID_MULTITOUCH=m
++CONFIG_HID_NINTENDO=m
++CONFIG_NINTENDO_FF=y
+ CONFIG_HID_NTRIG=m
+ CONFIG_HID_ORTEK=m
+ CONFIG_HID_PANTHERLORD=m
+--- a/arch/arm/configs/bcmrpi_defconfig
++++ b/arch/arm/configs/bcmrpi_defconfig
+@@ -1084,6 +1084,8 @@ CONFIG_HID_MAGICMOUSE=m
+ CONFIG_HID_MICROSOFT=m
+ CONFIG_HID_MONTEREY=m
+ CONFIG_HID_MULTITOUCH=m
++CONFIG_HID_NINTENDO=m
++CONFIG_NINTENDO_FF=y
+ CONFIG_HID_NTRIG=m
+ CONFIG_HID_ORTEK=m
+ CONFIG_HID_PANTHERLORD=m
+--- a/arch/arm64/configs/bcm2711_defconfig
++++ b/arch/arm64/configs/bcm2711_defconfig
+@@ -1147,6 +1147,8 @@ CONFIG_HID_MAGICMOUSE=m
+ CONFIG_HID_MICROSOFT=m
+ CONFIG_HID_MONTEREY=m
+ CONFIG_HID_MULTITOUCH=m
++CONFIG_HID_NINTENDO=m
++CONFIG_NINTENDO_FF=y
+ CONFIG_HID_NTRIG=m
+ CONFIG_HID_ORTEK=m
+ CONFIG_HID_PANTHERLORD=m
+--- a/arch/arm64/configs/bcm2712_defconfig
++++ b/arch/arm64/configs/bcm2712_defconfig
+@@ -1150,6 +1150,8 @@ CONFIG_HID_MAGICMOUSE=m
+ CONFIG_HID_MICROSOFT=m
+ CONFIG_HID_MONTEREY=m
+ CONFIG_HID_MULTITOUCH=m
++CONFIG_HID_NINTENDO=m
++CONFIG_NINTENDO_FF=y
+ CONFIG_HID_NTRIG=m
+ CONFIG_HID_ORTEK=m
+ CONFIG_HID_PANTHERLORD=m
+--- a/arch/arm64/configs/bcmrpi3_defconfig
++++ b/arch/arm64/configs/bcmrpi3_defconfig
+@@ -1061,6 +1061,8 @@ CONFIG_HID_MAGICMOUSE=m
+ CONFIG_HID_MICROSOFT=m
+ CONFIG_HID_MONTEREY=m
+ CONFIG_HID_MULTITOUCH=m
++CONFIG_HID_NINTENDO=m
++CONFIG_NINTENDO_FF=y
+ CONFIG_HID_NTRIG=m
+ CONFIG_HID_ORTEK=m
+ CONFIG_HID_PANTHERLORD=m
