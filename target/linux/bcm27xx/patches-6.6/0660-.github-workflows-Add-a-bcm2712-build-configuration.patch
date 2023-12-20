@@ -1,0 +1,24 @@
+From 48dae0af536f14a8d4c0dd38698cb5b6a51753b5 Mon Sep 17 00:00:00 2001
+From: Phil Elwell <phil@raspberrypi.com>
+Date: Thu, 28 Sep 2023 15:45:05 +0100
+Subject: [PATCH] .github/workflows: Add a bcm2712 build configuration
+
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+---
+ .github/workflows/kernel-build.yml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+--- a/.github/workflows/kernel-build.yml
++++ b/.github/workflows/kernel-build.yml
+@@ -50,6 +50,11 @@ jobs:
+             defconfig: bcm2711_defconfig
+             kernel: kernel8
+ 
++          - name: bcm2712
++            arch: arm64
++            defconfig: bcm2712_defconfig
++            kernel: kernel_2712
++
+     steps:
+     - name: Update install
+       run:

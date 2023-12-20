@@ -1,0 +1,87 @@
+From 6dcc0a93a87058d697fc1e1df7a93cc3cc9baf3d Mon Sep 17 00:00:00 2001
+From: Ram Chandrasekar <rkumbako@codeaurora.org>
+Date: Mon, 7 May 2018 11:54:08 -0600
+Subject: [PATCH] drivers: thermal: step_wise: add support for hysteresis
+
+Step wise governor increases the mitigation level when the temperature
+goes above a threshold and will decrease the mitigation when the
+temperature falls below the threshold. If it were a case, where the
+temperature hovers around a threshold, the mitigation will be applied
+and removed at every iteration. This reaction to the temperature is
+inefficient for performance.
+
+The use of hysteresis temperature could avoid this ping-pong of
+mitigation by relaxing the mitigation to happen only when the
+temperature goes below this lower hysteresis value.
+
+Signed-off-by: Ram Chandrasekar <rkumbako@codeaurora.org>
+Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+---
+ drivers/thermal/gov_step_wise.c | 33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
+
+--- a/drivers/thermal/gov_step_wise.c
++++ b/drivers/thermal/gov_step_wise.c
+@@ -17,11 +17,11 @@
+ #include "thermal_core.h"
+ 
+ /*
+- * If the temperature is higher than a trip point,
++ * If the temperature is higher than a hysteresis temperature,
+  *    a. if the trend is THERMAL_TREND_RAISING, use higher cooling
+  *       state for this trip point
+  *    b. if the trend is THERMAL_TREND_DROPPING, do nothing
+- * If the temperature is lower than a trip point,
++ * If the temperature is lower than a hysteresis temperature,
+  *    a. if the trend is THERMAL_TREND_RAISING, do nothing
+  *    b. if the trend is THERMAL_TREND_DROPPING, use lower cooling
+  *       state for this trip point, if the cooling state already
+@@ -81,6 +81,8 @@ static void update_passive_instance(stru
+ 
+ static void thermal_zone_trip_update(struct thermal_zone_device *tz, int trip_id)
+ {
++	int trip_temp, hyst_temp;
++	enum thermal_trip_type trip_type;
+ 	enum thermal_trend trend;
+ 	struct thermal_instance *instance;
+ 	struct thermal_trip trip;
+@@ -96,14 +98,37 @@ static void thermal_zone_trip_update(str
+ 		trace_thermal_zone_trip(tz, trip_id, trip.type);
+ 	}
+ 
+-	dev_dbg(&tz->device, "Trip%d[type=%d,temp=%d]:trend=%d,throttle=%d\n",
+-				trip_id, trip.type, trip.temperature, trend, throttle);
++	tz->ops->get_trip_temp(tz, trip_id, &trip_temp);
++	hyst_temp = trip_temp;
++	if (tz->ops->get_trip_hyst) {
++		tz->ops->get_trip_hyst(tz, trip_id, &hyst_temp);
++		hyst_temp = trip_temp - hyst_temp;
++	}
++	tz->ops->get_trip_type(tz, trip_id, &trip_type);
++
++	trend = get_tz_trend(tz, trip_id);
++
++	dev_dbg(&tz->device,
++		"Trip%d[type=%d,temp=%d,hyst=%d]:trend=%d,throttle=%d\n",
++		trip_id, trip_type, trip.temperature, hyst_temp, trend, throttle);
+ 
+ 	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+ 		if (instance->trip != trip_id)
+ 			continue;
+ 
+ 		old_target = instance->target;
++		throttle = false;
++		/*
++		 * Lower the mitigation only if the temperature
++		 * goes below the hysteresis temperature.
++		 */
++		if (tz->temperature >= trip_temp ||
++		   (tz->temperature >= hyst_temp &&
++		   old_target != THERMAL_NO_TARGET)) {
++			throttle = true;
++			trace_thermal_zone_trip(tz, trip, trip_type);
++		}
++
+ 		instance->target = get_target_state(instance, trend, throttle);
+ 		dev_dbg(&instance->cdev->device, "old_target=%d, target=%d\n",
+ 					old_target, (int)instance->target);

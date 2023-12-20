@@ -1,0 +1,41 @@
+From dade699c36a1092b06491ac5de053e704ad0d9e3 Mon Sep 17 00:00:00 2001
+From: Dom Cobley <popcornmix@gmail.com>
+Date: Wed, 13 Sep 2023 14:11:30 +0100
+Subject: [PATCH] Revert "drivers: thermal: step_wise: avoid throttling at
+ hysteresis temperature after dropping below it"
+
+This reverts commit 3f5ca4ffa6d7725160630391722aa28eb94b5165.
+---
+ drivers/thermal/gov_step_wise.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+--- a/drivers/thermal/gov_step_wise.c
++++ b/drivers/thermal/gov_step_wise.c
+@@ -98,12 +98,13 @@ static void thermal_zone_trip_update(str
+ 		trace_thermal_zone_trip(tz, trip_id, trip.type);
+ 	}
+ 
+-	hyst_temp = trip.temperature;
++	tz->ops->get_trip_temp(tz, trip_id, &trip_temp);
++	hyst_temp = trip_temp;
+ 	if (tz->ops->get_trip_hyst) {
+ 		tz->ops->get_trip_hyst(tz, trip_id, &hyst_temp);
+ 		hyst_temp = trip_temp - hyst_temp;
+ 	}
+-	trip_type = trip.type;
++	tz->ops->get_trip_type(tz, trip_id, &trip_type);
+ 
+ 	trend = get_tz_trend(tz, trip_id);
+ 
+@@ -123,9 +124,9 @@ static void thermal_zone_trip_update(str
+ 		 */
+ 		if (tz->temperature >= trip_temp ||
+ 		   (tz->temperature >= hyst_temp &&
+-		   old_target == instance->upper)) {
++		   old_target != THERMAL_NO_TARGET)) {
+ 			throttle = true;
+-			trace_thermal_zone_trip(tz, trip_id, trip_type);
++			trace_thermal_zone_trip(tz, trip, trip_type);
+ 		}
+ 
+ 		instance->target = get_target_state(instance, trend, throttle);

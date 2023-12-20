@@ -1,0 +1,68 @@
+From c4aec2665426e8dff8dc5c452f8acc6fea7db9fb Mon Sep 17 00:00:00 2001
+From: Dom Cobley <popcornmix@gmail.com>
+Date: Wed, 13 Sep 2023 19:54:04 +0100
+Subject: [PATCH] configs: Switch CONFIG_EMBEDDED to CONFIG_EXPERT
+
+---
+ arch/arm/configs/bcm2709_defconfig   | 2 +-
+ arch/arm/configs/bcm2711_defconfig   | 2 +-
+ arch/arm/configs/bcmrpi_defconfig    | 2 +-
+ arch/arm64/configs/bcm2711_defconfig | 2 +-
+ arch/arm64/configs/bcmrpi3_defconfig | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+--- a/arch/arm/configs/bcm2709_defconfig
++++ b/arch/arm/configs/bcm2709_defconfig
+@@ -31,7 +31,7 @@ CONFIG_NAMESPACES=y
+ CONFIG_USER_NS=y
+ CONFIG_SCHED_AUTOGROUP=y
+ CONFIG_BLK_DEV_INITRD=y
+-CONFIG_EMBEDDED=y
++CONFIG_EXPERT=y
+ CONFIG_PROFILING=y
+ CONFIG_ARCH_BCM=y
+ CONFIG_ARCH_BCM2835=y
+--- a/arch/arm/configs/bcm2711_defconfig
++++ b/arch/arm/configs/bcm2711_defconfig
+@@ -31,7 +31,7 @@ CONFIG_NAMESPACES=y
+ CONFIG_USER_NS=y
+ CONFIG_SCHED_AUTOGROUP=y
+ CONFIG_BLK_DEV_INITRD=y
+-CONFIG_EMBEDDED=y
++CONFIG_EXPERT=y
+ CONFIG_PROFILING=y
+ CONFIG_ARCH_BCM=y
+ CONFIG_ARCH_BCM2835=y
+--- a/arch/arm/configs/bcmrpi_defconfig
++++ b/arch/arm/configs/bcmrpi_defconfig
+@@ -29,7 +29,7 @@ CONFIG_NAMESPACES=y
+ CONFIG_USER_NS=y
+ CONFIG_SCHED_AUTOGROUP=y
+ CONFIG_BLK_DEV_INITRD=y
+-CONFIG_EMBEDDED=y
++CONFIG_EXPERT=y
+ CONFIG_PROFILING=y
+ CONFIG_ARCH_MULTI_V6=y
+ # CONFIG_ARCH_MULTI_V7 is not set
+--- a/arch/arm64/configs/bcm2711_defconfig
++++ b/arch/arm64/configs/bcm2711_defconfig
+@@ -33,7 +33,7 @@ CONFIG_USER_NS=y
+ CONFIG_CHECKPOINT_RESTORE=y
+ CONFIG_SCHED_AUTOGROUP=y
+ CONFIG_BLK_DEV_INITRD=y
+-CONFIG_EMBEDDED=y
++CONFIG_EXPERT=y
+ CONFIG_PROFILING=y
+ CONFIG_ARCH_BCM=y
+ CONFIG_ARCH_BCM2835=y
+--- a/arch/arm64/configs/bcmrpi3_defconfig
++++ b/arch/arm64/configs/bcmrpi3_defconfig
+@@ -30,7 +30,7 @@ CONFIG_NAMESPACES=y
+ CONFIG_USER_NS=y
+ CONFIG_SCHED_AUTOGROUP=y
+ CONFIG_BLK_DEV_INITRD=y
+-CONFIG_EMBEDDED=y
++CONFIG_EXPERT=y
+ CONFIG_PROFILING=y
+ CONFIG_ARCH_BCM=y
+ CONFIG_ARCH_BCM2835=y

@@ -1,0 +1,23 @@
+From 64d0d815cb18b6b8f3bfc7cd07553097b602cb6f Mon Sep 17 00:00:00 2001
+From: Lee Jackson <info@arducam.com>
+Date: Thu, 21 Apr 2022 14:14:29 +0800
+Subject: [PATCH] dt-bindings: vendor-prefixes: Add Arducam
+
+Add vendor prefix for Arducam (https://arducam.com).
+
+Signed-off-by: Lee Jackson <info@arducam.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -133,6 +133,8 @@ patternProperties:
+     description: arcx Inc. / Archronix Inc.
+   "^aries,.*":
+     description: Aries Embedded GmbH
++  "^arducam,.*":
++    description: Arducam Technology co., Ltd.
+   "^arm,.*":
+     description: ARM Ltd.
+   "^armadeus,.*":

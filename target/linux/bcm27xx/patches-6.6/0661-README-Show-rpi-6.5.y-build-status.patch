@@ -1,0 +1,22 @@
+From e3a9ac626c0d4254780ff8163548e485238e58a3 Mon Sep 17 00:00:00 2001
+From: Phil Elwell <phil@raspberrypi.com>
+Date: Fri, 29 Sep 2023 12:21:29 +0100
+Subject: [PATCH] README: Show rpi-6.5.y build status
+
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+---
+ README.md | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- a/README.md
++++ b/README.md
+@@ -25,6 +25,6 @@ Build status for rpi-6.1.y:
+ [![Pi kernel build tests](https://github.com/raspberrypi/linux/actions/workflows/kernel-build.yml/badge.svg?branch=rpi-6.1.y)](https://github.com/raspberrypi/linux/actions/workflows/kernel-build.yml)
+ [![dtoverlaycheck](https://github.com/raspberrypi/linux/actions/workflows/dtoverlaycheck.yml/badge.svg?branch=rpi-6.1.y)](https://github.com/raspberrypi/linux/actions/workflows/dtoverlaycheck.yml)
+ 
+-Build status for rpi-6.4.y:
+-[![Pi kernel build tests](https://github.com/raspberrypi/linux/actions/workflows/kernel-build.yml/badge.svg?branch=rpi-6.4.y)](https://github.com/raspberrypi/linux/actions/workflows/kernel-build.yml)
+-[![dtoverlaycheck](https://github.com/raspberrypi/linux/actions/workflows/dtoverlaycheck.yml/badge.svg?branch=rpi-6.4.y)](https://github.com/raspberrypi/linux/actions/workflows/dtoverlaycheck.yml)
++Build status for rpi-6.5.y:
++[![Pi kernel build tests](https://github.com/raspberrypi/linux/actions/workflows/kernel-build.yml/badge.svg?branch=rpi-6.5.y)](https://github.com/raspberrypi/linux/actions/workflows/kernel-build.yml)
++[![dtoverlaycheck](https://github.com/raspberrypi/linux/actions/workflows/dtoverlaycheck.yml/badge.svg?branch=rpi-6.5.y)](https://github.com/raspberrypi/linux/actions/workflows/dtoverlaycheck.yml)
