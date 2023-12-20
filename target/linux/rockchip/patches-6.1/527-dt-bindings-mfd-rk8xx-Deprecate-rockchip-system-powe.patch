@@ -1,0 +1,95 @@
+From cead8c188a5d93385c587692ee9a572602c4d4cf Mon Sep 17 00:00:00 2001
+From: Ondrej Jirman <megi@xff.cz>
+Date: Thu, 19 Oct 2023 18:57:23 +0200
+Subject: [PATCH] dt-bindings: mfd: rk8xx: Deprecate
+ rockchip,system-power-controller
+
+Deprecate support for this property in favor of standard
+system-power-controller one.
+
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+---
+ Documentation/devicetree/bindings/mfd/rockchip,rk805.yaml | 3 +++
+ Documentation/devicetree/bindings/mfd/rockchip,rk808.yaml | 3 +++
+ Documentation/devicetree/bindings/mfd/rockchip,rk809.yaml | 3 +++
+ Documentation/devicetree/bindings/mfd/rockchip,rk817.yaml | 3 +++
+ Documentation/devicetree/bindings/mfd/rockchip,rk818.yaml | 3 +++
+ 5 files changed, 15 insertions(+)
+
+--- a/Documentation/devicetree/bindings/mfd/rockchip,rk805.yaml
++++ b/Documentation/devicetree/bindings/mfd/rockchip,rk805.yaml
+@@ -42,9 +42,12 @@ properties:
+ 
+   rockchip,system-power-controller:
+     type: boolean
++    deprecated: true
+     description:
+       Telling whether or not this PMIC is controlling the system power.
+ 
++  system-power-controller: true
++
+   wakeup-source:
+     type: boolean
+     description:
+--- a/Documentation/devicetree/bindings/mfd/rockchip,rk808.yaml
++++ b/Documentation/devicetree/bindings/mfd/rockchip,rk808.yaml
+@@ -37,9 +37,12 @@ properties:
+ 
+   rockchip,system-power-controller:
+     type: boolean
++    deprecated: true
+     description:
+       Telling whether or not this PMIC is controlling the system power.
+ 
++  system-power-controller: true
++
+   wakeup-source:
+     type: boolean
+     description:
+--- a/Documentation/devicetree/bindings/mfd/rockchip,rk809.yaml
++++ b/Documentation/devicetree/bindings/mfd/rockchip,rk809.yaml
+@@ -37,9 +37,12 @@ properties:
+ 
+   rockchip,system-power-controller:
+     type: boolean
++    deprecated: true
+     description:
+       Telling whether or not this PMIC is controlling the system power.
+ 
++  system-power-controller: true
++
+   wakeup-source:
+     type: boolean
+     description:
+--- a/Documentation/devicetree/bindings/mfd/rockchip,rk817.yaml
++++ b/Documentation/devicetree/bindings/mfd/rockchip,rk817.yaml
+@@ -38,9 +38,12 @@ properties:
+ 
+   rockchip,system-power-controller:
+     type: boolean
++    deprecated: true
+     description:
+       Telling whether or not this PMIC is controlling the system power.
+ 
++  system-power-controller: true
++
+   wakeup-source:
+     type: boolean
+     description:
+--- a/Documentation/devicetree/bindings/mfd/rockchip,rk818.yaml
++++ b/Documentation/devicetree/bindings/mfd/rockchip,rk818.yaml
+@@ -37,9 +37,12 @@ properties:
+ 
+   rockchip,system-power-controller:
+     type: boolean
++    deprecated: true
+     description:
+       Telling whether or not this PMIC is controlling the system power.
+ 
++  system-power-controller: true
++
+   wakeup-source:
+     type: boolean
+     description:

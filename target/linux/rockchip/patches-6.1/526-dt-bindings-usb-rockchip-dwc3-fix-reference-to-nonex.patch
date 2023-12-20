@@ -1,0 +1,29 @@
+From e60a641980644156bc91f494b2764fe50d7185e8 Mon Sep 17 00:00:00 2001
+From: Vegard Nossum <vegard.nossum@oracle.com>
+Date: Sun, 22 Oct 2023 20:51:50 +0200
+Subject: [PATCH] dt-bindings: usb: rockchip,dwc3: fix reference to nonexistent
+ file
+
+This file was renamed but left a dangling reference. Fix it.
+
+Fixes: 0f48b0ed356d ("dt-bindings: phy: rename phy-rockchip-inno-usb2.yaml")
+Cc: Johan Jonker <jbx6244@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+---
+ Documentation/devicetree/bindings/usb/rockchip,dwc3.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/Documentation/devicetree/bindings/usb/rockchip,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/rockchip,dwc3.yaml
+@@ -15,7 +15,7 @@ description:
+   Phy documentation is provided in the following places.
+ 
+   USB2.0 PHY
+-  Documentation/devicetree/bindings/phy/phy-rockchip-inno-usb2.yaml
++  Documentation/devicetree/bindings/phy/rockchip,inno-usb2phy.yaml
+ 
+   Type-C PHY
+   Documentation/devicetree/bindings/phy/phy-rockchip-typec.txt

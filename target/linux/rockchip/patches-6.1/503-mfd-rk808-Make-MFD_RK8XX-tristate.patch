@@ -1,0 +1,26 @@
+From 677a15a324a741649f7f72d57e899ace02901966 Mon Sep 17 00:00:00 2001
+From: Geert Uytterhoeven <geert+renesas@glider.be>
+Date: Tue, 4 Jul 2023 15:07:48 +0200
+Subject: [PATCH 03/16] mfd: rk808: Make MFD_RK8XX tristate
+
+There is no reason for MFD_RK8XX to be bool, all drivers that depend on
+it, or that select it, are tristate.
+
+Fixes: c20e8c5b1203af37 ("mfd: rk808: Split into core and i2c")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+---
+ drivers/mfd/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -1203,7 +1203,7 @@ config MFD_RC5T583
+ 	  different functionality of the device.
+ 
+ config MFD_RK8XX
+-	bool
++	tristate
+ 	select MFD_CORE
+ 
+ config MFD_RK8XX_I2C

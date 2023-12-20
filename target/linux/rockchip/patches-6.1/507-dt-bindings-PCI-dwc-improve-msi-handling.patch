@@ -1,0 +1,43 @@
+From 872b174a8eb3e9471522622ffe4114985faeccf0 Mon Sep 17 00:00:00 2001
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+Date: Sat, 15 Jul 2023 00:37:44 +0200
+Subject: [PATCH 07/16] dt-bindings: PCI: dwc: improve msi handling
+
+Allow missing "msi" interrupt, iff the node has a "msi-map" property.
+
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+---
+ .../devicetree/bindings/pci/snps,dw-pcie.yaml     | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+--- a/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
+@@ -25,6 +25,15 @@ select:
+ allOf:
+   - $ref: /schemas/pci/pci-bus.yaml#
+   - $ref: /schemas/pci/snps,dw-pcie-common.yaml#
++  - if:
++      not:
++        required:
++          - msi-map
++    then:
++      properties:
++        interrupt-names:
++          contains:
++            const: msi
+ 
+ properties:
+   reg:
+@@ -202,12 +211,6 @@ properties:
+         - description: Combined Error interrupt signal.
+           const: err
+ 
+-    allOf:
+-      - contains:
+-          enum:
+-            - msi
+-            - msg
+-
+ additionalProperties: true
+ 
+ required:

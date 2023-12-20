@@ -1,0 +1,63 @@
+From dcf394c09e5d49f02a906e2113fb39e67ebe3d1f Mon Sep 17 00:00:00 2001
+From: Niklas Cassel <niklas.cassel@wdc.com>
+Date: Sat, 21 Oct 2023 00:44:11 +0200
+Subject: [PATCH 2/2] arm64: dts: rockchip: add missing rk3588 PCIe dma
+ properties
+
+The rk3588 has 5 PCIe controllers, however, according the the rk3588 TRM
+(Technical Reference Manual), only pcie3x4 supports the embedded DMA
+controller (eDMA) on the DWC PCIe controller.
+
+The size of the eDMA region equals to:
+0x200 + MAX(NUM_DMA_RD_CHAN, NUM_DMA_WR_CHAN) * 0x200.
+
+Where for each 0x200 region, the registers controlling the write channel
+starts at offset 0x0, and the registers controlling the read channel
+starts at offset 0x100.
+
+pcie3x4 has two DMA read channels and two DMA write channels,
+so it has size: 0x200 + max(2, 2) * 0x200 = 0x600
+
+On the rk3588 based rock-5b board, when building with CONFIG_DW_EDMA=y:
+Before this patch, only the iATUs are detected:
+rockchip-dw-pcie a40000000.pcie: iATU: unroll T, 16 ob, 16 ib, align 64K, limit 8G
+
+After this patch, both the iATUs and the eDMA channels are detected:
+rockchip-dw-pcie a40000000.pcie: iATU: unroll T, 16 ob, 16 ib, align 64K, limit 8G
+rockchip-dw-pcie a40000000.pcie: eDMA: unroll T, 2 wr, 2 rd
+
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+---
+ arch/arm64/boot/dts/rockchip/rk3588.dtsi | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+--- a/arch/arm64/boot/dts/rockchip/rk3588.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588.dtsi
+@@ -180,8 +180,13 @@
+ 			     <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH 0>,
+ 			     <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH 0>,
+ 			     <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH 0>,
+-			     <GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH 0>;
+-		interrupt-names = "sys", "pmc", "msg", "legacy", "err";
++			     <GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH 0>,
++			     <GIC_SPI 271 IRQ_TYPE_LEVEL_HIGH 0>,
++			     <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH 0>,
++			     <GIC_SPI 269 IRQ_TYPE_LEVEL_HIGH 0>,
++			     <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH 0>;
++		interrupt-names = "sys", "pmc", "msg", "legacy", "err",
++				  "dma0", "dma1", "dma2", "dma3";
+ 		#interrupt-cells = <1>;
+ 		interrupt-map-mask = <0 0 0 7>;
+ 		interrupt-map = <0 0 0 1 &pcie3x4_intc 0>,
+@@ -201,8 +206,9 @@
+ 		reg = <0xa 0x40000000 0x0 0x00300000>,
+ 		      <0x0 0xfe150000 0x0 0x00010000>,
+ 		      <0x0 0xf0000000 0x0 0x00100000>,
+-		      <0xa 0x40300000 0x0 0x00002000>;
+-		reg-names = "dbi", "apb", "config", "atu";
++		      <0xa 0x40300000 0x0 0x00002000>,
++		      <0xa 0x40380000 0x0 0x00000600>;
++		reg-names = "dbi", "apb", "config", "atu", "dma";
+ 		resets = <&cru SRST_PCIE0_POWER_UP>, <&cru SRST_P_PCIE0>;
+ 		reset-names = "pwr", "pipe";
+ 		status = "disabled";

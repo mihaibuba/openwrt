@@ -1,0 +1,43 @@
+From a46b2e6952fb8a8165cffe06b3896cd755901856 Mon Sep 17 00:00:00 2001
+From: Niklas Cassel <niklas.cassel@wdc.com>
+Date: Tue, 24 Oct 2023 17:10:08 +0200
+Subject: [PATCH 1/4] dt-bindings: PCI: dwc: rockchip: Add atu property
+
+Even though rockchip-dw-pcie.yaml inherits snps,dw-pcie.yaml
+using:
+
+allOf:
+  - $ref: /schemas/pci/snps,dw-pcie.yaml#
+
+and snps,dw-pcie.yaml does have the atu property defined, in order to be
+able to use this property, while still making sure 'make CHECK_DTBS=y'
+pass, we need to add this property to rockchip-dw-pcie.yaml.
+
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+---
+ Documentation/devicetree/bindings/pci/rockchip-dw-pcie.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+--- a/Documentation/devicetree/bindings/pci/rockchip-dw-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/rockchip-dw-pcie.yaml
+@@ -29,16 +29,20 @@ properties:
+           - const: rockchip,rk3568-pcie
+ 
+   reg:
++    minItems: 3
+     items:
+       - description: Data Bus Interface (DBI) registers
+       - description: Rockchip designed configuration registers
+       - description: Config registers
++      - description: iATU registers
+ 
+   reg-names:
++    minItems: 3
+     items:
+       - const: dbi
+       - const: apb
+       - const: config
++      - const: atu
+ 
+   clocks:
+     minItems: 5
