@@ -13,7 +13,7 @@ Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
 
 --- a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-@@ -1554,6 +1554,18 @@
+@@ -1637,6 +1637,18 @@
  		status = "disabled";
  	};
  

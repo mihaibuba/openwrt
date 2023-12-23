@@ -15,7 +15,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 
 --- a/arch/arm64/boot/dts/rockchip/rk3588-evb1-v10.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3588-evb1-v10.dts
-@@ -119,6 +119,15 @@
+@@ -120,6 +120,15 @@
  		pwms = <&pwm2 0 25000 0>;
  	};
  
@@ -31,7 +31,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  	pcie20_avdd0v85: pcie20-avdd0v85-regulator {
  		compatible = "regulator-fixed";
  		regulator-name = "pcie20_avdd0v85";
-@@ -242,6 +251,10 @@
+@@ -243,6 +252,10 @@
  	status = "okay";
  };
  
@@ -42,7 +42,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  &combphy2_psu {
  	status = "okay";
  };
-@@ -406,6 +419,13 @@
+@@ -407,6 +420,13 @@
  	};
  };
  
@@ -56,7 +56,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  &pcie2x1l1 {
  	reset-gpios = <&gpio4 RK_PA2 GPIO_ACTIVE_HIGH>;
  	pinctrl-names = "default";
-@@ -460,6 +480,10 @@
+@@ -461,6 +481,10 @@
  	};
  
  	pcie2 {
@@ -67,7 +67,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  		pcie2_1_rst: pcie2-1-rst {
  			rockchip,pins = <4 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
-@@ -490,6 +514,16 @@
+@@ -491,6 +515,16 @@
  			rockchip,pins = <4 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
  	};

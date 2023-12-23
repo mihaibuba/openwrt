@@ -305,8 +305,8 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  			cpu-idle-states = <&CPU_SLEEP>;
  			i-cache-size = <65536>;
  			i-cache-line-size = <64>;
-@@ -394,6 +612,230 @@
- 		#clock-cells = <0>;
+@@ -399,6 +617,230 @@
+ 		ports = <&vop_out>;
  	};
  
 +	thermal_zones: thermal-zones {
@@ -536,8 +536,8 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  	timer {
  		compatible = "arm,armv8-timer";
  		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_HIGH 0>,
-@@ -528,6 +970,16 @@
- 		reg = <0x0 0xfd58c000 0x0 0x1000>;
+@@ -543,6 +985,16 @@
+ 		reg = <0x0 0xfd5a8000 0x0 0x100>;
  	};
  
 +	bigcore0_grf: syscon@fd590000 {

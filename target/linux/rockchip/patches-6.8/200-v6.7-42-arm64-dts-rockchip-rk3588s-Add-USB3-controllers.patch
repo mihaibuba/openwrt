@@ -51,7 +51,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  		reg = <0x0 0xfc400000 0x0 0x400000>;
 --- a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-@@ -873,6 +873,38 @@
+@@ -878,6 +878,38 @@
  		};
  	};
  
@@ -90,7 +90,7 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
  	usb_host0_xhci: usb@fc000000 {
  		compatible = "rockchip,rk3588-dwc3", "snps,dwc3";
  		reg = <0x0 0xfc000000 0x0 0x400000>;
-@@ -965,6 +997,36 @@
+@@ -970,6 +1002,36 @@
  		reg = <0x0 0xfd58a000 0x0 0x10000>;
  	};
  

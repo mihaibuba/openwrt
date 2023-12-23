@@ -1,6 +1,6 @@
 --- a/block/blk.h
 +++ b/block/blk.h
-@@ -423,6 +423,8 @@ void blk_free_ext_minor(unsigned int min
+@@ -421,6 +421,8 @@ void blk_free_ext_minor(unsigned int min
  #define ADDPART_FLAG_NONE	0
  #define ADDPART_FLAG_RAID	1
  #define ADDPART_FLAG_WHOLEDISK	2
@@ -74,7 +74,7 @@
  #ifdef CONFIG_SGI_PARTITION
  	sgi_partition,
  #endif
-@@ -381,6 +388,11 @@ static struct block_device *add_partitio
+@@ -373,6 +380,11 @@ static struct block_device *add_partitio
  			goto out_del;
  	}
  
@@ -86,7 +86,7 @@
  	/* everything is up and running, commence */
  	err = xa_insert(&disk->part_tbl, partno, bdev, GFP_KERNEL);
  	if (err)
-@@ -579,6 +591,11 @@ static bool blk_add_partition(struct gen
+@@ -571,6 +583,11 @@ static bool blk_add_partition(struct gen
  	    (state->parts[p].flags & ADDPART_FLAG_RAID))
  		md_autodetect_dev(part->bd_dev);
  

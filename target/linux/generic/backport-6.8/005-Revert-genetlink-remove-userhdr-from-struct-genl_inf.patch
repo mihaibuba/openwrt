@@ -17,7 +17,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
 
 --- a/include/net/genetlink.h
 +++ b/include/net/genetlink.h
-@@ -98,6 +98,7 @@ struct genl_family {
+@@ -107,6 +107,7 @@ struct genl_family {
   * @family: generic netlink family
   * @nlhdr: netlink message header
   * @genlhdr: generic netlink message header
@@ -25,7 +25,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
   * @attrs: netlink attributes
   * @_net: network namespace
   * @user_ptr: user pointers
-@@ -109,6 +110,7 @@ struct genl_info {
+@@ -118,6 +119,7 @@ struct genl_info {
  	const struct genl_family *family;
  	const struct nlmsghdr *	nlhdr;
  	struct genlmsghdr *	genlhdr;
@@ -33,7 +33,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
  	struct nlattr **	attrs;
  	possible_net_t		_net;
  	void *			user_ptr[2];
-@@ -125,11 +127,6 @@ static inline void genl_info_net_set(str
+@@ -134,11 +136,6 @@ static inline void genl_info_net_set(str
  	write_pnet(&info->_net, net);
  }
  
@@ -47,7 +47,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
  #define GENL_SET_ERR_MSG_FMT(info, msg, args...) \
 --- a/net/netlink/genetlink.c
 +++ b/net/netlink/genetlink.c
-@@ -958,6 +958,7 @@ static int genl_family_rcv_msg_doit(cons
+@@ -1099,6 +1099,7 @@ static int genl_family_rcv_msg_doit(cons
  	info.family = family;
  	info.nlhdr = nlh;
  	info.genlhdr = nlmsg_data(nlh);

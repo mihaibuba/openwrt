@@ -12,7 +12,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/drivers/net/phy/Kconfig
 +++ b/drivers/net/phy/Kconfig
-@@ -66,6 +66,80 @@ config SFP
+@@ -74,6 +74,80 @@ config SFP
  	depends on HWMON || HWMON=n
  	select MDIO_I2C
  

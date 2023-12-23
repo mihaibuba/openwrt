@@ -1,6 +1,6 @@
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -2298,12 +2298,8 @@ struct net_device {
+@@ -2304,12 +2304,8 @@ struct net_device {
  #if IS_ENABLED(CONFIG_AX25)
  	void			*ax25_ptr;
  #endif
@@ -15,7 +15,7 @@
  #endif
 --- a/include/net/cfg802154.h
 +++ b/include/net/cfg802154.h
-@@ -482,7 +482,6 @@ struct wpan_dev {
+@@ -512,7 +512,6 @@ struct wpan_dev {
  
  #define to_phy(_dev)	container_of(_dev, struct wpan_phy, dev)
  
@@ -23,7 +23,7 @@
  static inline int
  wpan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
  		     const struct ieee802154_addr *daddr,
-@@ -493,7 +492,6 @@ wpan_dev_hard_header(struct sk_buff *skb
+@@ -523,7 +522,6 @@ wpan_dev_hard_header(struct sk_buff *skb
  
  	return wpan_dev->header_ops->create(skb, dev, daddr, saddr, len);
  }
@@ -47,7 +47,7 @@
  }
 --- a/net/core/net-sysfs.c
 +++ b/net/core/net-sysfs.c
-@@ -754,6 +754,7 @@ static const struct attribute_group nets
+@@ -759,6 +759,7 @@ static const struct attribute_group nets
  	.attrs  = netstat_attrs,
  };
  
@@ -55,7 +55,7 @@
  static struct attribute *wireless_attrs[] = {
  	NULL
  };
-@@ -762,19 +763,7 @@ static const struct attribute_group wire
+@@ -767,19 +768,7 @@ static const struct attribute_group wire
  	.name = "wireless",
  	.attrs = wireless_attrs,
  };
@@ -75,7 +75,7 @@
  
  #else /* CONFIG_SYSFS */
  #define net_class_groups	NULL
-@@ -2043,8 +2032,14 @@ int netdev_register_kobject(struct net_d
+@@ -2048,8 +2037,14 @@ int netdev_register_kobject(struct net_d
  
  	*groups++ = &netstat_group;
  
@@ -91,3 +91,16 @@
  #endif /* CONFIG_SYSFS */
  
  	error = device_add(dev);
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7623,10 +7623,6 @@ int stmmac_dvr_probe(struct device *devi
+ 	if (priv->dma_cap.rssen && priv->plat->rss_en)
+ 		ndev->features |= NETIF_F_RXHASH;
+ 
+-	ndev->vlan_features |= ndev->features;
+-	/* TSO doesn't work on VLANs yet */
+-	ndev->vlan_features &= ~NETIF_F_TSO;
+-
+ 	/* MTU range: 46 - hw-specific max */
+ 	ndev->min_mtu = ETH_ZLEN - ETH_HLEN;
+ 	if (priv->plat->has_xgmac)
