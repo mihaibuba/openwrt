@@ -162,8 +162,7 @@ define Device/rpi-4
 	raspberrypi,4-model-b
   DEVICE_PACKAGES := \
 	brcmfmac-sdio-firmware-4345-bt \
-	cypress-firmware-43455-sdio \
-	brcmfmac-nvram-43455-sdio \
+	brcmfmac-firmware-43455-rpi-4-sdio \
 	kmod-brcmfmac wpad-basic-mbedtls \
 	kmod-usb-net-lan78xx \
 	kmod-r8169
