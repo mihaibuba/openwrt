@@ -1,0 +1,97 @@
+From 37ab439127d28b04749d0449426f35a66b8db714 Mon Sep 17 00:00:00 2001
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Sun, 31 Dec 2023 16:12:47 +0900
+Subject: [PATCH] ksmbd: use kvzalloc instead of kvmalloc
+
+[ Upstream commit 81a94b27847f7d2e499415db14dd9dc7c22b19b0 ]
+
+Use kvzalloc instead of kvmalloc.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/smb2pdu.c       | 8 ++++----
+ fs/smb/server/transport_ipc.c | 4 ++--
+ fs/smb/server/vfs.c           | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
+
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -543,7 +543,7 @@ int smb2_allocate_rsp_buf(struct ksmbd_w
+ 	if (le32_to_cpu(hdr->NextCommand) > 0)
+ 		sz = large_sz;
+ 
+-	work->response_buf = kvmalloc(sz, GFP_KERNEL | __GFP_ZERO);
++	work->response_buf = kvzalloc(sz, GFP_KERNEL);
+ 	if (!work->response_buf)
+ 		return -ENOMEM;
+ 
+@@ -6120,7 +6120,7 @@ static noinline int smb2_read_pipe(struc
+ 		}
+ 
+ 		work->aux_payload_buf =
+-			kvmalloc(rpc_resp->payload_sz, GFP_KERNEL | __GFP_ZERO);
++			kvmalloc(rpc_resp->payload_sz, GFP_KERNEL);
+ 		if (!work->aux_payload_buf) {
+ 			err = -ENOMEM;
+ 			goto out;
+@@ -6277,7 +6277,7 @@ int smb2_read(struct ksmbd_work *work)
+ 	ksmbd_debug(SMB, "filename %pD, offset %lld, len %zu\n",
+ 		    fp->filp, offset, length);
+ 
+-	work->aux_payload_buf = kvmalloc(length, GFP_KERNEL | __GFP_ZERO);
++	work->aux_payload_buf = kvzalloc(length, GFP_KERNEL);
+ 	if (!work->aux_payload_buf) {
+ 		err = -ENOMEM;
+ 		goto out;
+@@ -6428,7 +6428,7 @@ static ssize_t smb2_write_rdma_channel(s
+ 	int ret;
+ 	ssize_t nbytes;
+ 
+-	data_buf = kvmalloc(length, GFP_KERNEL | __GFP_ZERO);
++	data_buf = kvzalloc(length, GFP_KERNEL);
+ 	if (!data_buf)
+ 		return -ENOMEM;
+ 
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -229,7 +229,7 @@ static struct ksmbd_ipc_msg *ipc_msg_all
+ 	struct ksmbd_ipc_msg *msg;
+ 	size_t msg_sz = sz + sizeof(struct ksmbd_ipc_msg);
+ 
+-	msg = kvmalloc(msg_sz, GFP_KERNEL | __GFP_ZERO);
++	msg = kvzalloc(msg_sz, GFP_KERNEL);
+ 	if (msg)
+ 		msg->sz = sz;
+ 	return msg;
+@@ -268,7 +268,7 @@ static int handle_response(int type, voi
+ 			       entry->type + 1, type);
+ 		}
+ 
+-		entry->response = kvmalloc(sz, GFP_KERNEL | __GFP_ZERO);
++		entry->response = kvzalloc(sz, GFP_KERNEL);
+ 		if (!entry->response) {
+ 			ret = -ENOMEM;
+ 			break;
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -437,7 +437,7 @@ static int ksmbd_vfs_stream_write(struct
+ 	}
+ 
+ 	if (v_len < size) {
+-		wbuf = kvmalloc(size, GFP_KERNEL | __GFP_ZERO);
++		wbuf = kvzalloc(size, GFP_KERNEL);
+ 		if (!wbuf) {
+ 			err = -ENOMEM;
+ 			goto out;
+@@ -854,7 +854,7 @@ ssize_t ksmbd_vfs_listxattr(struct dentr
+ 	if (size <= 0)
+ 		return size;
+ 
+-	vlist = kvmalloc(size, GFP_KERNEL | __GFP_ZERO);
++	vlist = kvzalloc(size, GFP_KERNEL);
+ 	if (!vlist)
+ 		return -ENOMEM;
+ 

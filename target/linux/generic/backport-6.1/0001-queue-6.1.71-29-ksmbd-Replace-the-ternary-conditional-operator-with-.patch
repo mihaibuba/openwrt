@@ -1,0 +1,29 @@
+From 33402111d359479c10dc384f75d2fc765680f68b Mon Sep 17 00:00:00 2001
+From: Lu Hongfei <luhongfei@vivo.com>
+Date: Sun, 31 Dec 2023 16:12:48 +0900
+Subject: [PATCH] ksmbd: Replace the ternary conditional operator with min()
+
+[ Upstream commit f65fadb0422537d73f9a6472861852dc2f7a6a5b ]
+
+It would be better to replace the traditional ternary conditional
+operator with min() in compare_sids.
+
+Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/smbacl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -97,7 +97,7 @@ int compare_sids(const struct smb_sid *c
+ 	/* compare all of the subauth values if any */
+ 	num_sat = ctsid->num_subauth;
+ 	num_saw = cwsid->num_subauth;
+-	num_subauth = num_sat < num_saw ? num_sat : num_saw;
++	num_subauth = min(num_sat, num_saw);
+ 	if (num_subauth) {
+ 		for (i = 0; i < num_subauth; ++i) {
+ 			if (ctsid->sub_auth[i] != cwsid->sub_auth[i]) {

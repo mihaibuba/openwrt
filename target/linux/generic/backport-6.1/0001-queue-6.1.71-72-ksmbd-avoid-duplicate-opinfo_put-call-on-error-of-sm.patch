@@ -1,0 +1,44 @@
+From 05c3d65e1c840ada301c4242120aac75b2fca135 Mon Sep 17 00:00:00 2001
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Sun, 31 Dec 2023 16:13:31 +0900
+Subject: [PATCH] ksmbd: avoid duplicate opinfo_put() call on error of
+ smb21_lease_break_ack()
+
+[ Upstream commit 658609d9a618d8881bf549b5893c0ba8fcff4526 ]
+
+opinfo_put() could be called twice on error of smb21_lease_break_ack().
+It will cause UAF issue if opinfo is referenced on other places.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/smb2pdu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8219,6 +8219,11 @@ static void smb21_lease_break_ack(struct
+ 			    le32_to_cpu(req->LeaseState));
+ 	}
+ 
++	if (ret < 0) {
++		rsp->hdr.Status = err;
++		goto err_out;
++	}
++
+ 	lease_state = lease->state;
+ 	opinfo->op_state = OPLOCK_STATE_NONE;
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+@@ -8226,11 +8231,6 @@ static void smb21_lease_break_ack(struct
+ 	wake_up_interruptible_all(&opinfo->oplock_brk);
+ 	opinfo_put(opinfo);
+ 
+-	if (ret < 0) {
+-		rsp->hdr.Status = err;
+-		goto err_out;
+-	}
+-
+ 	rsp->StructureSize = cpu_to_le16(36);
+ 	rsp->Reserved = 0;
+ 	rsp->Flags = 0;

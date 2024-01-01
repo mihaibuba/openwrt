@@ -1,0 +1,63 @@
+From 1f45674c76fe294b52fd2f41b4e43319a85b79b3 Mon Sep 17 00:00:00 2001
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Sun, 31 Dec 2023 16:13:26 +0900
+Subject: [PATCH] ksmbd: set epoch in create context v2 lease
+
+[ Upstream commit d045850b628aaf931fc776c90feaf824dca5a1cf ]
+
+To support v2 lease(directory lease), ksmbd set epoch in create context
+v2 lease response.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/oplock.c | 5 ++++-
+ fs/smb/server/oplock.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -104,7 +104,7 @@ static int alloc_lease(struct oplock_inf
+ 	lease->duration = lctx->duration;
+ 	memcpy(lease->parent_lease_key, lctx->parent_lease_key, SMB2_LEASE_KEY_SIZE);
+ 	lease->version = lctx->version;
+-	lease->epoch = 0;
++	lease->epoch = le16_to_cpu(lctx->epoch);
+ 	INIT_LIST_HEAD(&opinfo->lease_entry);
+ 	opinfo->o_lease = lease;
+ 
+@@ -1032,6 +1032,7 @@ static void copy_lease(struct oplock_inf
+ 	       SMB2_LEASE_KEY_SIZE);
+ 	lease2->duration = lease1->duration;
+ 	lease2->flags = lease1->flags;
++	lease2->epoch = lease1->epoch++;
+ }
+ 
+ static int add_lease_global_list(struct oplock_info *opinfo)
+@@ -1364,6 +1365,7 @@ void create_lease_buf(u8 *rbuf, struct l
+ 		memcpy(buf->lcontext.LeaseKey, lease->lease_key,
+ 		       SMB2_LEASE_KEY_SIZE);
+ 		buf->lcontext.LeaseFlags = lease->flags;
++		buf->lcontext.Epoch = cpu_to_le16(++lease->epoch);
+ 		buf->lcontext.LeaseState = lease->state;
+ 		memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
+ 		       SMB2_LEASE_KEY_SIZE);
+@@ -1423,6 +1425,7 @@ struct lease_ctx_info *parse_lease_state
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+ 		lreq->flags = lc->lcontext.LeaseFlags;
++		lreq->epoch = lc->lcontext.Epoch;
+ 		lreq->duration = lc->lcontext.LeaseDuration;
+ 		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
+ 				SMB2_LEASE_KEY_SIZE);
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -34,6 +34,7 @@ struct lease_ctx_info {
+ 	__le32			flags;
+ 	__le64			duration;
+ 	__u8			parent_lease_key[SMB2_LEASE_KEY_SIZE];
++	__le16			epoch;
+ 	int			version;
+ };
+ 

@@ -1,0 +1,28 @@
+From 81b2a9a21b6d3aa6764c9803f6850eb77ae69354 Mon Sep 17 00:00:00 2001
+From: Yang Li <yang.lee@linux.alibaba.com>
+Date: Sun, 31 Dec 2023 16:12:57 +0900
+Subject: [PATCH] ksmbd: Fix one kernel-doc comment
+
+[ Upstream commit bf26f1b4e0918f017775edfeacf6d867204b680b ]
+
+Fix one kernel-doc comment to silence the warning:
+fs/smb/server/smb2pdu.c:4160: warning: Excess function parameter 'infoclass_size' description in 'buffer_check_err'
+
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/smb2pdu.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4156,7 +4156,6 @@ err_out2:
+  * @reqOutputBufferLength:	max buffer length expected in command response
+  * @rsp:		query info response buffer contains output buffer length
+  * @rsp_org:		base response buffer pointer in case of chained response
+- * @infoclass_size:	query info class response buffer size
+  *
+  * Return:	0 on success, otherwise error
+  */
