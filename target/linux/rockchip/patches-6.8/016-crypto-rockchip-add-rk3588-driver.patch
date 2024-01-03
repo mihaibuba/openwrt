@@ -22,7 +22,7 @@ Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
 
 --- a/drivers/crypto/Kconfig
 +++ b/drivers/crypto/Kconfig
-@@ -660,6 +660,35 @@ config CRYPTO_DEV_ROCKCHIP_DEBUG
+@@ -661,6 +661,35 @@ config CRYPTO_DEV_ROCKCHIP_DEBUG
  	  the number of requests per algorithm and other internal stats.
  
  

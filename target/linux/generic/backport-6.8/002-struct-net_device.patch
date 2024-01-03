@@ -1,6 +1,6 @@
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -2304,12 +2304,8 @@ struct net_device {
+@@ -2305,12 +2305,8 @@ struct net_device {
  #if IS_ENABLED(CONFIG_AX25)
  	void			*ax25_ptr;
  #endif

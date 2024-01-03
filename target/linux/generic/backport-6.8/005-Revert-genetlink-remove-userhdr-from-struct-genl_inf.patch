@@ -17,7 +17,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
 
 --- a/include/net/genetlink.h
 +++ b/include/net/genetlink.h
-@@ -107,6 +107,7 @@ struct genl_family {
+@@ -110,6 +110,7 @@ struct genl_family {
   * @family: generic netlink family
   * @nlhdr: netlink message header
   * @genlhdr: generic netlink message header
@@ -25,7 +25,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
   * @attrs: netlink attributes
   * @_net: network namespace
   * @user_ptr: user pointers
-@@ -118,6 +119,7 @@ struct genl_info {
+@@ -121,6 +122,7 @@ struct genl_info {
  	const struct genl_family *family;
  	const struct nlmsghdr *	nlhdr;
  	struct genlmsghdr *	genlhdr;
@@ -33,7 +33,7 @@ This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
  	struct nlattr **	attrs;
  	possible_net_t		_net;
  	void *			user_ptr[2];
-@@ -134,11 +136,6 @@ static inline void genl_info_net_set(str
+@@ -137,11 +139,6 @@ static inline void genl_info_net_set(str
  	write_pnet(&info->_net, net);
  }
  

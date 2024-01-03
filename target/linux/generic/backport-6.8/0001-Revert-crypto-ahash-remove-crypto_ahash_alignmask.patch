@@ -10,7 +10,7 @@ This reverts commit 0f8660c82b79af595b056f6b9f4f227edeb88574.
 
 --- a/include/crypto/hash.h
 +++ b/include/crypto/hash.h
-@@ -333,6 +333,12 @@ static inline const char *crypto_ahash_d
+@@ -329,6 +329,12 @@ static inline const char *crypto_ahash_d
  	return crypto_tfm_alg_driver_name(crypto_ahash_tfm(tfm));
  }
  
