@@ -153,6 +153,20 @@ define U-Boot/nanopi-r6s-rk3588
 
 endef
 
+define U-Boot/nanopc-t6-rk3588
+  BUILD_SUBTARGET:=armv8
+  NAME:=NANOPC-T6
+  BUILD_DEVICES:= \
+    friendlyelec_nanopc-t6
+  DEPENDS:=+PACKAGE_u-boot-nanopc-t6-rk3588:arm-trusted-firmware-rockchip
+  PKG_BUILD_DEPENDS:=arm-trusted-firmware-rockchip
+  DEVICE_DTS := rk3588-nanopc-t6.dts
+  UBOOT_CONFIG:= nanopc-t6-rk3588
+  ATF:=rk3588_bl31.elf
+  DDR_3588:=$(1)
+
+endef
+
 define U-Boot/orangepi-5-plus-rk3588
   BUILD_SUBTARGET:=armv8
   NAME:=ORANGEPI-5-PLUS
@@ -180,6 +194,7 @@ endef
 UBOOT_TARGETS := \
   nanopi-r6c-rk3588 \
   nanopi-r6s-rk3588 \
+  nanopc-t6-rk3588 \
   orangepi-5-plus-rk3588 \
   rock-5b-rk3588 \
   bpi-r2-pro-rk3568 \

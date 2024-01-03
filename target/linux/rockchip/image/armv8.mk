@@ -95,6 +95,16 @@ define Device/friendlyelec_nanopi-r6s
 endef
 TARGET_DEVICES += friendlyelec_nanopi-r6s
 
+define Device/friendlyelec_nanopc-t6
+  DEVICE_VENDOR := Friendlyelec
+  DEVICE_MODEL := NanoPC T6
+  SOC := rk3588
+  UBOOT_DEVICE_NAME := nanopc-t6-rk3588
+  IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopc-t6 | pine64-img | gzip | append-metadata
+  DEVICE_PACKAGES := kmod-r8169
+endef
+TARGET_DEVICES += friendlyelec_nanopc-t6
+
 define Device/pine64_rockpro64
   DEVICE_VENDOR := Pine64
   DEVICE_MODEL := RockPro64
@@ -156,6 +166,6 @@ define Device/xunlong_orangepi-5-plus
   UBOOT_DEVICE_NAME := orangepi-5-plus-rk3588
   SUPPORTED_DEVICES := rockchip,rk3588-orangepi-5-plus
   IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r6c | pine64-img | gzip | append-metadata
- DEVICE_PACKAGES := kmod-r8169
+  DEVICE_PACKAGES := kmod-r8169
 endef
 TARGET_DEVICES += xunlong_orangepi-5-plus
