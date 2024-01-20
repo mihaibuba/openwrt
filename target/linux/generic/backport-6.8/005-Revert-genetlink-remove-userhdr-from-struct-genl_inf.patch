@@ -1,0 +1,68 @@
+From ca31fb1ed58c293b3f02b1aa46aa672866aff540 Mon Sep 17 00:00:00 2001
+From: Marty Jones <mj8263788@gmail.com>
+Date: Thu, 17 Aug 2023 17:06:55 -0400
+Subject: [PATCH 7/8] Revert "genetlink: remove userhdr from struct genl_info"
+
+This reverts commit bffcc6882a1bb2be8c9420184966f4c2c822078e.
+---
+ drivers/block/drbd/drbd_nl.c |  9 ++++-----
+ include/net/genetlink.h      |  7 ++-----
+ net/netlink/genetlink.c      |  1 +
+ net/openvswitch/conntrack.c  |  2 +-
+ net/openvswitch/datapath.c   | 29 +++++++++++++----------------
+ net/openvswitch/meter.c      | 10 +++++-----
+ net/tipc/netlink_compat.c    |  2 +-
+ 7 files changed, 27 insertions(+), 33 deletions(-)
+
+
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -110,6 +110,7 @@ struct genl_family {
+  * @family: generic netlink family
+  * @nlhdr: netlink message header
+  * @genlhdr: generic netlink message header
++ * @userhdr: user specific header
+  * @attrs: netlink attributes
+  * @_net: network namespace
+  * @user_ptr: user pointers
+@@ -121,6 +122,7 @@ struct genl_info {
+ 	const struct genl_family *family;
+ 	const struct nlmsghdr *	nlhdr;
+ 	struct genlmsghdr *	genlhdr;
++	void *			userhdr;
+ 	struct nlattr **	attrs;
+ 	possible_net_t		_net;
+ 	void *			user_ptr[2];
+@@ -137,11 +139,6 @@ static inline void genl_info_net_set(str
+ 	write_pnet(&info->_net, net);
+ }
+ 
+-static inline void *genl_info_userhdr(const struct genl_info *info)
+-{
+-	return (u8 *)info->genlhdr + GENL_HDRLEN;
+-}
+-
+ #define GENL_SET_ERR_MSG(info, msg) NL_SET_ERR_MSG((info)->extack, msg)
+ 
+ #define GENL_SET_ERR_MSG_FMT(info, msg, args...) \
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1099,6 +1099,7 @@ static int genl_family_rcv_msg_doit(cons
+ 	info.family = family;
+ 	info.nlhdr = nlh;
+ 	info.genlhdr = nlmsg_data(nlh);
++	info.userhdr = nlmsg_data(nlh) + GENL_HDRLEN;
+ 	info.attrs = attrbuf;
+ 	info.extack = extack;
+ 	genl_info_net_set(&info, net);
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -1295,7 +1295,7 @@ static int tipc_nl_compat_recv(struct sk
+ 	struct tipc_nl_compat_msg msg;
+ 	struct nlmsghdr *req_nlh;
+ 	struct nlmsghdr *rep_nlh;
+-	struct tipc_genlmsghdr *req_userhdr = genl_info_userhdr(info);
++	struct tipc_genlmsghdr *req_userhdr = info->userhdr;
+ 
+ 	memset(&msg, 0, sizeof(msg));
+ 
